@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="newcover.ico" />
+    <link rel="icon" type="image/x-icon" href="newcover.ico">
     <title>Ali Qureshi | PHP Developer</title>
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1522,12 +1522,29 @@
           }
         });
 
-        // Contact form submission
-        $("#contact-form").submit(function (e) {
-          e.preventDefault();
-          alert("Thank you for your message! I will get back to you soon.");
-          $("#contact-form")[0].reset();
-        });
+        $('#contact-form').submit(function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: "sendmail.php",
+        type: "POST",
+        data: {
+            name: $("#name").val(),
+            email: $("#email").val(),
+            subject: $("#subject").val(),
+            message: $("#message").val()
+        },
+        success: function (response) {
+            if (response.trim() === "success") {
+                alert("Thanks! Your message has been sent.");
+                $('#contact-form')[0].reset();
+            } else {
+                alert("Something went wrong. Please try again.");
+            }
+        }
+    });
+});
+
 
         // Scroll indicator
         $("#scroll-indicator").click(function () {
@@ -1612,28 +1629,7 @@
         $("#year").text(new Date().getFullYear());
       });
 
-      $("#contact-form").submit(function (e) {
-        e.preventDefault();
-
-        $.ajax({
-          url: "sendmail.php",
-          type: "POST",
-          data: {
-            name: $("#name").val(),
-            email: $("#email").val(),
-            subject: $("#subject").val(),
-            message: $("#message").val(),
-          },
-          success: function (response) {
-            if (response.trim() === "success") {
-              alert("Thanks! Your message has been sent.");
-              $("#contact-form")[0].reset();
-            } else {
-              alert("Something went wrong. Please try again.");
-            }
-          },
-        });
-      });
+      
     </script>
   </body>
 </html>
