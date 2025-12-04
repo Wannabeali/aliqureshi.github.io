@@ -3,13 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="newcover.ico" />
     <title>Ali Qureshi | PHP Developer</title>
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <!-- AOS (Animate On Scroll) -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
     <!-- VanillaTilt for 3D Tilt -->
@@ -1270,7 +1274,7 @@
                   </div>
                   <div>
                     <p class="font-semibold text-slate-100">Email</p>
-                    <p class="text-slate-300">contact@aliqureshi.com</p>
+                    <p class="text-slate-300">aliqureshi755@gmail.com</p>
                   </div>
                 </div>
                 <div class="flex items-center">
@@ -1287,19 +1291,19 @@
               </div>
               <div class="flex space-x-4 mt-8">
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/ali73/"
                   class="bg-slate-900/80 border border-slate-700 p-3 rounded-xl hover:border-sky-500 hover:-translate-y-0.5 transition duration-300 cursor-hoverable"
                 >
                   <i class="fab fa-linkedin-in text-sky-400"></i>
                 </a>
                 <a
-                  href="#"
+                  href="https://github.com/Wannabeali"
                   class="bg-slate-900/80 border border-slate-700 p-3 rounded-xl hover:border-slate-50 hover:-translate-y-0.5 transition duration-300 cursor-hoverable"
                 >
                   <i class="fab fa-github"></i>
                 </a>
                 <a
-                  href="#"
+                  href="https://x.com/AliQure90051859"
                   class="bg-slate-900/80 border border-slate-700 p-3 rounded-xl hover:border-sky-400 hover:-translate-y-0.5 transition duration-300 cursor-hoverable"
                 >
                   <i class="fab fa-twitter"></i>
@@ -1310,7 +1314,7 @@
               class="glass-effect p-8 rounded-2xl shadow-xl"
               data-aos="fade-left"
             >
-              <form id="contact-form">
+              <form id="contact-form" method="POST" action="sendmail.php">
                 <div class="mb-5">
                   <label for="name" class="block mb-2 font-medium text-sm"
                     >Your Name</label
@@ -1606,6 +1610,29 @@
 
         // Year in footer
         $("#year").text(new Date().getFullYear());
+      });
+
+      $("#contact-form").submit(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+          url: "sendmail.php",
+          type: "POST",
+          data: {
+            name: $("#name").val(),
+            email: $("#email").val(),
+            subject: $("#subject").val(),
+            message: $("#message").val(),
+          },
+          success: function (response) {
+            if (response.trim() === "success") {
+              alert("Thanks! Your message has been sent.");
+              $("#contact-form")[0].reset();
+            } else {
+              alert("Something went wrong. Please try again.");
+            }
+          },
+        });
       });
     </script>
   </body>
